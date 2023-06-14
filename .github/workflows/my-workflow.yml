@@ -3,16 +3,20 @@ name: My Workflow
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: "Version to use"
+      my-version:
+        description: 'Version to use'
         required: true
-        default: "latest"
+        default: 'latest'
   pull_request:
+
+# If inputs are present, use the default from there
+# Otherwise, default to v3.2.1
+env:
+  VERSION: ${{ inputs != '' && inputs.my-version || 'v3.2.1' }}
 
 jobs:
   print-version:
     runs-on: ubuntu-latest
-    if: ${{ inputs.version }}
     steps:
       - name: Print version
-        run: echo ${{ inputs.version }}
+        run: echo ${{ env.VERSION }}
