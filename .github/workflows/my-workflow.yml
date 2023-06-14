@@ -1,0 +1,18 @@
+name: My Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to use"
+        required: true
+        default: "latest"
+  pull_request:
+
+jobs:
+  print-version:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.version }}
+    steps:
+      - name: Print version
+        run: echo ${{ inputs.version }}
